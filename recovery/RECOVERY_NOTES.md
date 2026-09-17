@@ -28,15 +28,23 @@ Storage strings and bytecode establish per-case directories, `case.json`, temp `
 
 ### RECONSTRUCTED-STRONG
 
-Provider endpoint construction, auth headers, request bodies, defaults, HTTP status handling, timeout use, UTF-8 POST transport and response extraction are translated from DEX into readable Java. Provider fixtures compile and pass under host JDK 21.
+Provider endpoint construction, auth headers, request bodies, defaults, HTTP status handling, timeout use, UTF-8 POST transport and response extraction are translated from DEX into readable Java.
+
+`Iso8601`, artifact identity/defaults/type wires, artifact JSON field order, content SHA-256 behavior, immutable parent lists, and app-private append-only case storage have now been translated into the recovery source. `CaseStore` enforces artifact immutability, content-hash checks, parent-before-child provenance, temp-file writes, per-artifact JSON, and append-only `record.jsonl` events.
 
 All five methodology prompt constants are recovered verbatim. Stage 1 creates a NODE_REQUEST parented by original input and then NODE_RESPONSE or ERROR. Later stages assemble prior-record context; stage 2 requires preserved stage-1 NODE_RESPONSE artifacts and cross-exposes other-node outputs; stage 3 iterates over accumulated prior stages; stage 4 produces structured deliberation; stage 5 produces synthesis prefixed as a derived artifact and explicitly not verified truth. Failure artifacts preserve raw error bodies.
 
-### INFERRED/PARTIAL
+`RelayApp` now reconstructs the observed `filesDir/ngl` root and refreshes `CaseStore`/`MethodologyEngine` using the saved context budget and timeout.
 
-The clean `MainActivity` and `SettingsActivity` reproduce the visible control vocabulary and provider settings layout but are not yet DEX-instruction-equivalent. Case, Artifact and Compare activities are deliberately marked placeholders rather than falsely presented as recovered.
+### RECONSTRUCTED BUT NOT YET INSTRUCTION-EQUIVALENT
 
-`MethodologyEngine.java` currently preserves observed constants/stage numbering only; full persisted-artifact orchestration still has to be translated from the disassembly before baseline equivalence can be claimed. `CaseStore`, `Artifact`, `ContextBuilder`, `CoreJson`, and `Iso8601` are inventoried but not yet committed as clean translations. This is the principal remaining baseline gap.
+`ContextBuilder` implements the observed protective-artifact / compacted-entry strategy and 1,000-character minimum budget, but exact compaction ordering and final truncation behavior still require instruction-level verification.
+
+`CoreJson` reproduces observed string escaping, hashing, object/list parsing surface and accessors; parser edge-case behavior has not yet been exhaustively compared with the DEX implementation.
+
+The clean `MainActivity` and `SettingsActivity` reproduce the visible control vocabulary and provider settings layout but are not yet DEX-instruction-equivalent. Case, Artifact and Compare activities remain deliberately marked placeholders rather than falsely presented as recovered.
+
+`MethodologyEngine.java` has the recovered constants, constructor substrate and stage model, but the complete persisted-artifact orchestration for stages 1–5 still has to be translated from disassembly. This is now the principal baseline gap.
 
 ## Historical corroboration performed after artifact reconstruction
 
@@ -48,8 +56,10 @@ The newer ~42.6 MB `NGL™.zip` contains build products for that `com.nogaslabs.
 
 The current execution environment has JDK 21 and **no `gradle` executable, no Android SDK, no `ANDROID_HOME`, and network package installation fails DNS resolution**. Therefore producing a rebuilt APK here is objectively blocked by missing Android build tooling, not by an APK-analysis limitation.
 
-The provider/core deterministic subset was compiled with `javac` and `ProviderFixture` passed. With Android SDK 34 + Gradle/AGP resolution available, Android packaging is the next build gate.
+A host-JDK provider fixture was compiled and passed earlier in this recovery. An artifact/JSON fixture has been added to the repository for execution in the next environment that can compile the updated source tree. Android packaging still requires SDK 34 plus Gradle/AGP resolution.
 
 ## Baseline gate
 
-Do not merge modernization into the recovery baseline until `Artifact`, `CaseStore`, `ContextBuilder`, full `MethodologyEngine`, and all Activity flows have been translated and a rebuilt APK has been behaviorally compared against the reference. Provider abstraction modernization belongs in a later branch/commit series.
+Do not merge modernization into the recovery baseline until full `MethodologyEngine` orchestration and all Activity flows have been translated, deterministic fixtures pass against the clean reconstruction, and a rebuilt APK has been behaviorally compared against reference SHA-256 `6cee7b1ea12c435cc7705510b5d61c85c63764dcd9658a00b6ea99c2311e9ffe`.
+
+Provider abstraction modernization belongs in a later branch/commit series and must not contaminate this baseline.
