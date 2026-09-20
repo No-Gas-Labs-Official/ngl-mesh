@@ -53,3 +53,9 @@ gradle assembleDebug
 2. Do not promote README claims or test XML counts to VERIFIED without re-running tests.
 3. Live provider calls stay UNVERIFIED until keys exist on device.
 4. Preserve MethodologyEngine stage invariants and provenance parents.
+
+## Commercial direction
+
+The strongest near-term product thesis is a **Proof-Carrying Work Exchange**: bounded AI or human jobs produce an artifact together with evidence, checks, failures, provenance, and an explicit acceptance receipt. This turns the mesh’s authority and provenance model into a sellable trust layer for AI-assisted diligence and evidence-backed deliverables.
+
+See [`docs/PROOF-CARRYING-WORK.md`](docs/PROOF-CARRYING-WORK.md) for the revenue hypothesis, paid-demo wedge, trust boundaries, and implementation sequence. This is a commercial experiment, not a claim that the current repository already earns revenue.
