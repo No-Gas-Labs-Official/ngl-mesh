@@ -34,7 +34,15 @@ with tempfile.TemporaryDirectory(prefix='ngl-relay-bridge-') as tmp:
         raise SystemExit('specification_gap: recovered Java core absent')
     classes = root / 'classes'
     subprocess.run(['java','-m','jdk.compiler/com.sun.tools.javac.Main','-d',str(classes)]
-                   + sorted(files) + [str(here/'RaeEvidenceBridge.java'),str(here/'RaeEvidenceBridgeTest.java')], check=True)
+                   + sorted(files) + [
+                       str(here/'RaeEvidenceBridge.java'),
+                       str(here/'RaeEvidenceBridgeTest.java'),
+                       str(here/'EvidenceAuthorizedTransition.java'),
+                       str(here/'EvidenceAuthorizedTransitionTest.java')
+                   ], check=True)
     for suite in ['CaseStoreTest','MethodologyEngineTest','ContextBuilderTest','ProviderTransportTest']:
         subprocess.run(['java','-cp',str(classes),'ngl.relay.core.'+suite],check=True,timeout=30)
-    subprocess.run(['java','-cp',str(classes),'ngl.relay.integration.RaeEvidenceBridgeTest',str(apk),str(report),str(root/'test-store')],check=True,timeout=30)
+    subprocess.run(['java','-cp',str(classes),'ngl.relay.integration.RaeEvidenceBridgeTest',
+                    str(apk),str(report),str(root/'test-store')],check=True,timeout=30)
+    subprocess.run(['java','-cp',str(classes),'ngl.relay.integration.EvidenceAuthorizedTransitionTest',
+                    str(apk),str(report),str(root/'authority-test-store')],check=True,timeout=30)
