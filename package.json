@@ -1,0 +1,9 @@
+{
+  "name": "ngl-mesh",
+  "private": true,
+  "type": "module",
+  "description": "Control-surface validator for the NGL mesh contract. Not the Android app.",
+  "scripts": {
+    "test": "node --test scripts/"
+  }
+}
